@@ -1,6 +1,111 @@
 $primary-color: #444;
+$secondary-color: #4b9a95;
+$show-home-image: true;
+$home-image: url(../img/websiteImage1.png);
+$icon-image: url(../img/npLogo.png);
+
+@mixin easeIn {
+  transition: all 0.5s ease-out;
+}
+
+@mixin background {
+  @if $show-home-image {
+    &#bg-img {
+      background: $home-image;
+      background-repeat: no-repeat;
+      background-position-y: 60px;
+    }
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
 
 body {
+  @include background;
   background: $primary-color;
   color: #fff;
+  height: 100%;
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.5;
+}
+
+// headings
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-weight: 400;
+
+  &.lg-heading {
+    font-size: 3rem;
+    color: #fff;
+  }
+
+  &.sm-heading {
+    font-size: 20px;
+    margin-bottom: 10px;
+    padding: 0.2rem 1rem;
+    color: #fff;
+  }
+}
+
+a {
+  color: #bababa;
+  text-decoration: none;
+}
+
+header {
+  position: fixed;
+  width: 100%;
+  color: #bababa;
+  .navbar1 {
+    position: absolute;
+    margin-left: 5%;
+    margin-top: 17px;
+    font-size: 17px;
+    a {
+      padding: 0.4rem;
+      padding-top: 0rem;
+    }
+  }
+  .navbar2 {
+    position: relative;
+    float: right;
+    margin-right: 5%;
+    margin-top: 20px;
+    font-size: 10px;
+    a {
+      padding: 0.4rem;
+      padding-top: 0rem;
+    }
+    .contact {
+      font-size: 17px;
+    }
+  }
+  :hover {
+    color: $secondary-color;
+    @include easeIn();
+  }
+}
+
+.text-secondary {
+  color: $secondary-color;
+}
+
+main {
+  padding: 4rem;
+  height: 100%;
+  margin-left: 10vh;
+
+  &#home {
+    h1 {
+      margin-top: 60vh;
+    }
+    h2 {
+      margin-left: -10px;
+    }
+  }
 }
