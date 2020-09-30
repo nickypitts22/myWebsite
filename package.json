@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Nick Website",
   "main": "index.js",
-  "homepage": "https://nickypitts22.github.io/myWebsite",
+  "homepage": "http://npitts.com/",
   "scripts": {
     "sass": "node-sass -w scss/ -o dist/css/ --recursive",
     "deploy": "gh-pages -d dist"
