@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Contact Me</title>
+    <link
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <body id="contact">
+    <nav class="cf">
+      <ul class="cf">
+        <li>
+          <a href="work.html">Work</a>
+        </li>
+        <li>
+          <a href="film-calculators.html">Film Calculators</a>
+        </li>
+        <li>
+          <a href="about.html">About</a>
+        </li>
+        <li>
+          <a href="contact.html"><span id="current">Contact</span></a>
+        </li>
+      </ul>
+      <a href="#" id="openup"><img src="" alt="" /></a>
+      <div class="homebutton">
+        <a href="index.html#home"
+          ><img src="img/npLogoW.png" width="70" alt=""
+        /></a>
+      </div>
+    </nav>
+    <div id="contact-page">
+      <div class="container">
+        <h1 class="brand">Contact</h1>
+        <div class="wrapper">
+          <div class="company-info">
+            <h3>Nicholas Pitts</h3>
+            <ul>
+              <li>
+                <i class="fa fa-road"></i> 1700 Hughey Dr. <br />
+                Longview, TX
+              </li>
+              <li><i class="fa fa-phone"></i> (903) 746-9622</li>
+              <li><i class="fa fa-envelope"></i> nickypitts22@gmail.com</li>
+            </ul>
+          </div>
+          <div class="contact">
+            <h3>Email Me</h3>
+            <div class="alert">Your message has been sent</div>
+            <form id="contactForm">
+              <p>
+                <label>Name*</label>
+                <input type="text" name="name" id="name" required />
+              </p>
+              <p>
+                <label>Company</label>
+                <input type="text" name="company" id="company" />
+              </p>
+              <p>
+                <label>Email Address*</label>
+                <input type="email" name="email" id="email" required />
+              </p>
+              <p>
+                <label>Phone Number</label>
+                <input type="text" name="phone" id="phone" />
+              </p>
+              <p class="full">
+                <label>Message</label>
+                <textarea name="message" rows="5" id="message"></textarea>
+              </p>
+              <p class="full">
+                <button type="submit">Submit</button>
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-database.js"></script>
+
+    <script>
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      var firebaseConfig = {
+        apiKey: "AIzaSyBGqGWzdwiDkYcGIFqB_fh4IEcTJn_atzM",
+        authDomain: "contact-form-98ee6.firebaseapp.com",
+        databaseURL: "https://contact-form-98ee6.firebaseio.com",
+        projectId: "contact-form-98ee6",
+        storageBucket: "contact-form-98ee6.appspot.com",
+        messagingSenderId: "503681094527",
+        appId: "1:503681094527:web:ca44e86b74932441c7c04a",
+        measurementId: "G-FNCRG068VB",
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+
+      // reference messages collection
+      var messagesRef = firebase.database().ref("messages");
+
+      // listen for form submit
+      document
+        .getElementById("contactForm")
+        .addEventListener("submit", submitForm);
+
+      // submit form
+      function submitForm(e) {
+        e.preventDefault();
+
+        //get values
+        var name = getInputVal("name");
+        var company = getInputVal("company");
+        var email = getInputVal("email");
+        var phone = getInputVal("phone");
+        var message = getInputVal("message");
+
+        // save message
+        saveMessage(name, company, email, phone, message);
+
+        // show alert
+        document.querySelector(".alert").style.display = "block";
+
+        // Hide alert after 3 seconds
+        setTimeout(function () {
+          document.querySelector(".alert").style.display = "none";
+        }, 3000);
+
+        // clear form
+        document.getElementById("contactForm").reset();
+      }
+
+      // function to get form values
+      function getInputVal(id) {
+        return document.getElementById(id).value;
+      }
+
+      // save messages to firebase
+      function saveMessage(name, company, email, phone, message) {
+        var newMessageRef = messagesRef.push();
+        newMessageRef.set({
+          name: name,
+          company: company,
+          email: email,
+          phone: phone,
+          message: message,
+        });
+      }
+    </script>
+  </body>
+</html>

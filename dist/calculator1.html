@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AOV Calculator</title>
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <body id="calculatorOne">
+    <a href="film-calculators.html" id="back">BACK</a>
+    <div id="calculatorOne-page">
+      <h1>Angle of View Calculator</h1>
+      <div id="instructions">*Change the arrow to change the output</div>
+      <div class="error"></div>
+      <div id="formWrapper">
+        <form>
+          <div>
+            <img
+              src="img/iconArrow.png"
+              alt="click"
+              id="buttonOne"
+              class="input"
+            />
+          </div>
+          <div>
+            <p>Film Back Size (mm)</p>
+            <input type="number" id="filmBackSize" />
+          </div>
+          <div>
+            <img
+              src="img/iconArrow.png"
+              alt="click"
+              id="buttonTwo"
+              class="input"
+            />
+          </div>
+          <div>
+            <p>Focal Length (mm)</p>
+            <input type="number" id="focalLength" />
+          </div>
+          <div>
+            <img
+              src="img/iconArrow.png"
+              alt="click"
+              id="buttonThree"
+              class="input"
+            />
+          </div>
+          <div>
+            <p>Padding (post crop) %</p>
+            <input type="number" id="padding" />
+          </div>
+          <div>
+            <img
+              src="img/iconArrow.png"
+              alt="click"
+              id="buttonFour"
+              class="output"
+            />
+          </div>
+          <div>
+            <p>Angle of View (degrees)</p>
+            <input type="number" id="angleOfView" />
+          </div>
+        </form>
+        <button type="button" id="calculate">CALCULATE: Angle of View</button>
+      </div>
+    </div>
+    <footer>
+      <p>Nicholas Pitts, Copyright &copy 2020</p>
+    </footer>
+
+    <script>
+      let buttonOne = document.querySelector("#buttonOne");
+      let buttonTwo = document.querySelector("#buttonTwo");
+      let buttonThree = document.querySelector("#buttonThree");
+      let buttonFour = document.querySelector("#buttonFour");
+      let calculateButton = document.querySelector("#calculate");
+
+      buttonOne.addEventListener("click", function (e) {
+        e.preventDefault();
+        buttonOne.className = "output";
+        buttonTwo.className = "input";
+        buttonThree.className = "input";
+        buttonFour.className = "input";
+        calculateButton.innerHTML = "CALCULATE: Film Back Size";
+      });
+
+      buttonTwo.addEventListener("click", function (e) {
+        e.preventDefault();
+        buttonOne.className = "input";
+        buttonTwo.className = "output";
+        buttonThree.className = "input";
+        buttonFour.className = "input";
+        calculateButton.innerHTML = "CALCULATE: Focal Length";
+      });
+
+      buttonThree.addEventListener("click", function (e) {
+        e.preventDefault();
+        buttonOne.className = "input";
+        buttonTwo.className = "input";
+        buttonThree.className = "output";
+        buttonFour.className = "input";
+        calculateButton.innerHTML = "CALCULATE: Padding";
+      });
+
+      buttonFour.addEventListener("click", function (e) {
+        e.preventDefault();
+        buttonOne.className = "input";
+        buttonTwo.className = "input";
+        buttonThree.className = "input";
+        buttonFour.className = "output";
+        calculateButton.innerHTML = "CALCULATE: Angle of View";
+      });
+
+      let filmBackSize = document.querySelector("#filmBackSize");
+      let focalLength = document.querySelector("#focalLength");
+      let padding = document.querySelector("#padding");
+      let angleOfView = document.querySelector("#angleOfView");
+      let bigNumer = 0;
+
+      calculateButton.addEventListener("click", function (e) {
+        if (buttonOne.className == "output") {
+          bigNumber =
+            focalLength.value *
+            2 *
+            Math.tan(((Math.PI / 180) * angleOfView.value) / 2);
+          bigNumber = bigNumber + bigNumber * (padding.value / 100);
+
+          filmBackSize.value =
+            Math.round((bigNumber + Number.EPSILON) * 100) / 100;
+        }
+
+        if (buttonTwo.className == "output") {
+          bigNumber =
+            (filmBackSize.value - filmBackSize.value * (padding.value / 100)) /
+            (2 * Math.tan(((Math.PI / 180) * angleOfView.value) / 2));
+
+          focalLength.value =
+            Math.round((bigNumber + Number.EPSILON) * 100) / 100;
+        }
+
+        if (buttonThree.className == "output") {
+          bigNumber =
+            focalLength.value *
+            2 *
+            Math.tan(((Math.PI / 180) * angleOfView.value) / 2);
+
+          bigNumber = filmBackSize.value - bigNumber;
+
+          bigNumber = 100 * (bigNumber / filmBackSize.value);
+
+          padding.value = Math.round((bigNumber + Number.EPSILON) * 100) / 100;
+        }
+
+        if (buttonFour.className == "output") {
+          bigNumber =
+            2 *
+            (180 / Math.PI) *
+            Math.atan(
+              (0.5 *
+                (filmBackSize.value -
+                  filmBackSize.value * (padding.value / 100))) /
+                focalLength.value
+            );
+
+          angleOfView.value =
+            Math.round((bigNumber + Number.EPSILON) * 100) / 100;
+        }
+
+        if (filmBackSize.value == 0) {
+          filmBackSize.value = 0;
+        }
+
+        if (focalLength.value == 0) {
+          focalLength.value = 0;
+        }
+
+        if (padding.value == 0) {
+          padding.value = 0;
+        }
+
+        if (angleOfView.value == 0) {
+          angleOfView.value = 0;
+        }
+
+        let error = 0;
+
+        if (filmBackSize.value <= 0) {
+          filmBackSize.style.color = "#FF0000";
+          error++;
+        } else {
+          filmBackSize.style.color = "rgb(44, 44, 44)";
+        }
+
+        if (focalLength.value <= 0) {
+          focalLength.style.color = "#FF0000";
+          error++;
+        } else {
+          focalLength.style.color = "rgb(44, 44, 44)";
+        }
+
+        if (padding.value < 0) {
+          padding.style.color = "#FF0000";
+          error++;
+        } else {
+          padding.style.color = "rgb(44, 44, 44)";
+        }
+
+        if (angleOfView.value <= 0) {
+          angleOfView.style.color = "#FF0000";
+          error++;
+        } else {
+          angleOfView.style.color = "rgb(44, 44, 44)";
+        }
+
+        let message = document.querySelector(".error");
+
+        if (error > 0) {
+          message.innerHTML = "*impossible Values";
+        } else {
+          message.innerHTML = "";
+        }
+      });
+    </script>
+  </body>
+</html>

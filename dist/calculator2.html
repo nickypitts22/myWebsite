@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blur Circles Calculator</title>
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <body id="calculatorTwo">
+    <a href="film-calculators.html" id="back">BACK</a>
+    <h1>Blur Circles Calculator</h1>
+    <div id="calculatorTwo-page">
+      <div class="container">
+        <div class="field">
+          <p>Film Back Size</p>
+          <input type="number" id="filmBack1" />
+        </div>
+        <div class="field">
+          <p>f stop</p>
+          <input type="number" id="fstop1" />
+        </div>
+      </div>
+      <div class="filler">
+        <img src="img/equalSign.png" alt="equal" id="equal" />
+      </div>
+      <div class="container">
+        <div class="field">
+          <p>New Film Back Size</p>
+          <input type="number" id="filmBack2" />
+        </div>
+        <div class="field">
+          <p class="special">Equivalent f stop</p>
+          <input type="number" id="fstop2" readonly />
+        </div>
+      </div>
+    </div>
+    <footer>
+      <p>Nicholas Pitts, Copyright &copy 2020</p>
+    </footer>
+    <script>
+      let equal = document.querySelector("#equal");
+
+      let filmBack1 = document.querySelector("#filmBack1");
+      let fstop1 = document.querySelector("#fstop1");
+      let filmBack2 = document.querySelector("#filmBack2");
+      let fstop2 = document.querySelector("#fstop2");
+      let bigNumber = 0;
+
+      equal.addEventListener("click", function (e) {
+        bigNumber = (fstop1.value * filmBack2.value) / filmBack1.value;
+        fstop2.value = Math.round((bigNumber + Number.EPSILON) * 100) / 100;
+        v;
+      });
+    </script>
+  </body>
+</html>

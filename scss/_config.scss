@@ -1,0 +1,43 @@
+$primary-color: #fff;
+$secondary-color: #4b9a95;
+$show-home-image: true;
+$home-image: url(../img/websiteImage1.png);
+$icon-image: url(../img/npLogo.png);
+
+@mixin easeIn {
+  transition: all 0.5s ease-out;
+}
+
+@mixin background {
+  @if $show-home-image {
+    &#bg-img {
+      background: $home-image;
+      background-repeat: no-repeat;
+      background-position-y: 60px;
+    }
+  }
+}
+
+@mixin mediaSm {
+  @media screen and (max-width: 500px) {
+    @content;
+  }
+}
+
+@mixin mediaMd {
+  @media screen and (min-width: 501px) and (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin mediaLg {
+  @media screen and (min-width: 769px) and (max-width: 1300px) {
+    @content;
+  }
+}
+
+@mixin mediaXl {
+  @media screen and (min-width: 1301px) {
+    @content;
+  }
+}
