@@ -76,7 +76,7 @@ body#index {
       z-index: 5;
       position: fixed;
       transform: translate(-15px, -48px); }
-    nav a:active {
+    nav li a:active {
       color: #4b9a95; }
     nav a:hover {
       color: none; }
