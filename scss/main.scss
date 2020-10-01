@@ -107,8 +107,10 @@ $menu-border: #555;
       transform: translate(-15px, -48px);
     }
 
-    a:active {
-      color: #4b9a95;
+    li {
+      a:active {
+        color: #4b9a95;
+      }
     }
 
     a:hover {
